@@ -1,5 +1,6 @@
 # coloncolon
-mix of HTMX features (HDA) and SPA
+
+##mix of HTMX features (HDA) and SPA
 
 just a proof of concept
 
@@ -10,11 +11,11 @@ available attributes:
 - :var defines a reactive variable
 ```html
     <input type="hidden" :var="name" value="john" >
-
+```
 - :bind uses a defined reactive variable
 ```html
     <div :bind="name"></div>
-
+```
 - :each loop over an array
 
     it assumes that the reactive variable contains a json value as a string. Use :bind to bind a property of every item of the array.
@@ -30,26 +31,26 @@ available attributes:
             </article>
         </div>
     </div>
-
+```
 - :include loads a partial html content and includes it in the current element
 ```html
     <div :include="nav.html"></div>
-
+```
 - :stream receives partial html content as a streaming source
 ```html
     <div :stream="foo.txt"></div>
-
+```
 - :target defines the element (or elements) which children will be replaced with a partial html content load
 ```html
     <p><a href="nav.html?bloc" :target="#bloc,#bloc2" :transition>Carrega bloc 4</a></p>
     <form method="POST" action="foo.html" :target="#bloc"></form>
     <div id="bloc"></div>
     <div id="bloc2"></div>
-
+```
 - :poll defines a repeating query every x ms.
 ```html
     <div :include="foo.txt" :poll="2000" :on-click="this.removeAttribute(':poll')" ></div>
-
+```
 - :on-[eventname] defines a event handler
 
     look the previous example. this is mapped to the element that defines the event.
@@ -59,7 +60,7 @@ available attributes:
 - :loader states that there must be a loader indicator while the partial load is being received.
 ```html
     <p><a href="contacto.html" :target="#bloc" :transition :loader>Carrega bloc 2</a></p>
-
+```
     CSS defined for this:
 ```css
     .loader:before {
@@ -74,5 +75,5 @@ available attributes:
         margin: 1em auto;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
-
+```
 - :lazy waits until the element gets into the view port to activate the :include attribute
