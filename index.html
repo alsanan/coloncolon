@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Prova microframework</title>
+  <script type="module" src="framework.js"></script>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; }
+    [inert] { opacity: 0.5; pointer-events: none; }
+    included-html { display: block; margin-top: 1rem; border: 1px dashed #aaa; padding: 0.5rem; }
+  </style>
+</head>
+<body data-theme="dark" class="kelp-theme-dark" style="padding:1rem">
+
+  <h1>Prova de :include, :lazy i :stream</h1>
+
+  <section>
+    <h2>🔹 Càrrega parcial amb :include</h2>
+    <div :include="nav.html"></div>
+  </section>
+
+  <!--include-html src="nav.html">…</include-html-->
+
+  <section>
+    <h2>🔹 Càrrega condicionada (lazy)</h2>
+    <div style="height: 100vh"></div>
+    <div :lazy :include="./box.html" :transition :loader>
+      <p>Esperant component lazy 2...</p>
+    </div>
+  </section>
+
+  <section>
+    <div :include="foo.txt" :poll="2000" :on-click="this.removeAttribute(':poll')" :transition ></div>
+  </section>
+
+  <section>
+    <h2 :on-click="alert(event.target)">🔹 Substitució amb target (enllaç)</h2>
+    <p><a href="header.html" :target="#bloc" :transition :loader>Carrega bloc 1</a></p>
+    <p><a href="contacto.html" :target="#bloc" :transition :loader>Carrega bloc 2</a></p>
+    <p><a href="foo.html?bloc" :target="#bloc" >Carrega bloc 3</a></p>
+    <p><a href="nav.html?bloc" :target="#bloc,#bloc2" :transition>Carrega bloc 4</a></p>
+    <div id="bloc"></div>
+    <div id="bloc2"></div>
+  </section>
+
+  <section>
+    <h2 :on-mouseover="console.log(':mouseover')">🔹 Formulari amb target</h2>
+    <form method="get" action="foo.html" :target="#resposta" role="group" :transition>
+      <input name="q" placeholder="get value for q" />
+      <button>get</button>
+    </form>
+    <form method="post" action="foo.php" :target="#resposta" role="group">
+      <input name="q" placeholder="post value for q" />
+      <button>post</button>
+    </form>
+    <form method="PUT" action="foo.html" :target="#resposta" role="group" :loader>
+      <input name="q" placeholder="PUT value for q" />
+      <button>put</button>
+    </form>
+    <div id="resposta"></div>
+    <!--object name="resposta" data="about:blank"></object-->
+  </section>
+
+  <section>
+    <h2>🔹 Streaming</h2>
+    <div :stream="foo.txt"></div>
+  </section>
+  
+  <section>  
+
+    <input type="hidden" :var="counter" value="0">
+    <input type="hidden" :var="userName" value="Rodolfito">
+    <input type="hidden" :var="message" value="Això és un missatge inicial.">
+
+    <div class="section">
+        <h3>Comptador:</h3>
+        <p>El valor actual del comptador és: <span :bind="counter"></span></p>
+        <button onclick="window._dataStore.set('counter', (window._dataStore.get('counter') || 0) + 1);">Incrementar</button>
+        <button onclick="window._dataStore.set('counter', Math.max(0, (window._dataStore.get('counter') || 0) - 1));">Decrementar</button>
+    </div>
+
+    <div class="section">
+        <h3>Nom d'usuari:</h3>
+        <label for="nameInput">Edita el nom:</label>
+        <input type="text" id="nameInput" :var="userName"> 
+        <p>Hola, <strong :bind="userName"></strong>! Benvingut al sistema.</p>
+    </div>
+
+    <div class="section">
+        <h3>Missatge:</h3>
+        <label for="messageInput">Escriu el teu missatge:</label>
+        <textarea id="messageInput" :var="message" rows="3" cols="30"></textarea>
+        <p>El teu missatge actual és: <em :bind="message"></em></p>
+    </div>
+
+    <div class="section">
+        <h3>Variables múltiples:</h3>
+        <p>El comptador és <span :bind="counter"></span> i l'usuari és <span :bind="userName"></span>.</p>
+    </div>
+		
+  </section>
+
+
+  <section>
+
+    <input type="hidden" :var="products" value='[{"id":1, "name":"Samarreta", "price":20.50}, {"id":2, "name":"Pantalons", "price":45.00}, {"id":3, "name":"Sabates", "price":75.99}]'>
+    
+    <div class="section" >
+        <h2>Productes en llista:</h2>
+        <div :each="products"> 
+            <article>
+                <p>ID: <span :bind="id"></span></p>  <p>Nom: <span :bind="name"></span></p> <p>Preu: <span :bind="price"></span>€</p> 
+            </article>
+        </div>
+    </div>
+
+    <div class="section">
+        <button onclick="
+            const currentProducts = window._dataStore.get('products');
+            const newId = currentProducts.length ? Math.max(...currentProducts.map(p => p.id)) + 1 : 1;
+            const newProducts = [...currentProducts, {id: newId, name: 'Nou Producte ' + newId, price: Math.random() * 100}];
+            window._dataStore.set('products', newProducts);
+        ">Afegir Producte</button>
+
+        <button onclick="
+            const currentProducts = window._dataStore.get('products');
+            if (currentProducts.length > 0) {
+                const newProducts = currentProducts.slice(0, -1); // Eliminar l'últim
+                window._dataStore.set('products', newProducts);
+            }
+        ">Eliminar Últim</button>
+    </div>
+
+
+  </section>
+  
+
+</body>
+</html>

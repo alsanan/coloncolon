@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.classless.min.css"
+  >
+  <title>Include HTML Demo :: CONTACTO</title>
+  </head>
+<body data-theme="dark">
+
+Un Web Component personalizado (&lt;include-html>)
+Un Service Worker que, si está activo, preprocesa el HTML solicitado e inyecta los fragmentos antes de servirlo
+Y, como fallback, el Web Component hace lo mismo en el frontend si no hay SW o se recibió HTML "sin expandir"
+🧠 ¿Qué necesitas?
+Un Service Worker que:
+
+Intercepte fetch de páginas .html
+Haga fetch() del recurso real
+Busque en su contenido apariciones de <include-html src="...">
+Sustituya esas etiquetas por el HTML correspondiente antes de responder
+Un Web Component <include-html> que:
+
+Si el fragmento no fue inyectado por el SW, haga el fetch e inserte el contenido directamente 
+
+  <p>Contactoooooo...</p>
+pagina entera como index, aunque carga header que a su vez carga nav
+</body>
+</html>
