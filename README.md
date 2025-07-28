@@ -4,7 +4,7 @@
 
 just a proof of concept
 
-this is a framework based on attributes. the attributes are defined with a colon prefix (:). it uses a hidden iframe (like htmz) to load standard documents like <a href> and <frame action> and then uses onload to get the loaded content. in that way it uses the same mechanism that the browser without emulations like fetch.
+this is a framework based on attributes. the attributes are defined with a colon prefix (:). it uses a hidden iframe (like htmz) to load standard documents like ```<a href>``` and ```<frame action>``` and then uses onload to get the loaded content. in that way it uses the same mechanism that the browser without emulations like fetch.
 
 available attributes:
 
