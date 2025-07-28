@@ -8,48 +8,47 @@ this is a framework based on attributes. the attributes are defined with a colon
 available attributes:
 
 - :var defines a reactive variable
-
-    &lt;input type="hidden" :var="name" value="john" >
+```html
+    <input type="hidden" :var="name" value="john" >
 
 - :bind uses a defined reactive variable
-
-    &lt;div :bind="name">&lt;/div>
+```html
+    <div :bind="name"></div>
 
 - :each loop over an array
 
     it assumes that the reactive variable contains a json value as a string. Use :bind to bind a property of every item of the array.
-
-    &lt;input type="hidden" :var="products" value='[{"id":1, "name":"Samarreta", "price":20.50}, {"id":2, "name":"Pantalons", "price":45.00}, {"id":3, "name":"Sabates", "price":75.99}]'>
-
-    &lt;div class="section" >
-        &lt;h2>Products in list:&lt;/h2>
-        &lt;div :each="products"> 
-            &lt;article>
-                &lt;p>ID: &lt;span :bind="id">&lt;/span>&lt;/p>  
-                &lt;p>Name: &lt;span :bind="name">&lt;/span>&lt;/p> 
-                &lt;p>Price: &lt;span :bind="price">&lt;/span>€&lt;/p> 
-            &lt;/article>
-        &lt;/div>
-    &lt;/div>
+```html
+    <input type="hidden" :var="products" value='[{"id":1, "name":"Samarreta", "price":20.50}, {"id":2, "name":"Pantalons", "price":45.00}, {"id":3, "name":"Sabates", "price":75.99}]'>
+    <div class="section" >
+        <h2>Products in list:</h2>
+        <div :each="products"> 
+            <article>
+                <p>ID: <span :bind="id"></span></p>  
+                <p>Name: <span :bind="name"></span></p> 
+                <p>Price: <span :bind="price"></span>€</p> 
+            </article>
+        </div>
+    </div>
 
 - :include loads a partial html content and includes it in the current element
-
-    &lt;div :include="nav.html">&lt;/div>
+```html
+    <div :include="nav.html"></div>
 
 - :stream receives partial html content as a streaming source
-
-    &lt;div :stream="foo.txt">&lt;/div>
+```html
+    <div :stream="foo.txt"></div>
 
 - :target defines the element (or elements) which children will be replaced with a partial html content load
-
-    &lt;p>&lt;a href="nav.html?bloc" :target="#bloc,#bloc2" :transition>Carrega bloc 4&lt;/a>&lt;/p>
-    &lt;form method="POST" action="foo.html" :target="#bloc">&lt;/form>
-    &lt;div id="bloc">&lt;/div>
-    &lt;div id="bloc2">&lt;/div>
+```html
+    <p><a href="nav.html?bloc" :target="#bloc,#bloc2" :transition>Carrega bloc 4</a></p>
+    <form method="POST" action="foo.html" :target="#bloc"></form>
+    <div id="bloc"></div>
+    <div id="bloc2"></div>
 
 - :poll defines a repeating query every x ms.
-
-    &lt;div :include="foo.txt" :poll="2000" :on-click="this.removeAttribute(':poll')" >&lt;/div>
+```html
+    <div :include="foo.txt" :poll="2000" :on-click="this.removeAttribute(':poll')" ></div>
 
 - :on-[eventname] defines a event handler
 
@@ -58,11 +57,11 @@ available attributes:
 - :transition states that there must be a smooth transition to the changing spaces because of new or removed content as a result of a partial load.
 
 - :loader states that there must be a loader indicator while the partial load is being received.
-
-    &lt;p>&lt;a href="contacto.html" :target="#bloc" :transition :loader>Carrega bloc 2&lt;/a>&lt;/p>
+```html
+    <p><a href="contacto.html" :target="#bloc" :transition :loader>Carrega bloc 2</a></p>
 
     CSS defined for this:
-
+```css
     .loader:before {
         content:"";
         display:block;
